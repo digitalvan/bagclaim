@@ -95,8 +95,8 @@ public class airport {
 		departures.add(new departure("UA17", "A4", "MHT", "09:15"));
 		departures.add(new departure("UA18", "A5", "LAX", "10:15"));
 
-		System.out.println(departures.get(0).getDepature());
-		System.out.println(departures.get(1).getDepature());
+		// System.out.println(departures.get(0).getDepature());
+		// System.out.println(departures.get(1).getDepature());
 
 		// bags
 		List<bag> bags = new ArrayList<bag>();
@@ -113,7 +113,7 @@ public class airport {
 		EdgeW e = new EdgeW();
 		e.setDestination(b);
 		e.setWeight(5.0);
-		a.addEdge(e);
+		b.addEdge(e);
 
 		NodeW c = new NodeW();
 		c.setLabel("A10");
@@ -124,20 +124,46 @@ public class airport {
 
 		// Output Bag # <point1> <point2> .. <pointn> : travel time
 
+		// From bags, you need Bag # and Entry Point.
+		// join bag.flight_id with departure.flight_id
+		// join departure.flight_gate with conveyor system gate.
 		Iterator<bag> bagIterator = bags.iterator();
 		while (bagIterator.hasNext()) {
 
-			System.out.println(bagIterator.next().getBag_number());
+			// System.out.println(bagIterator.next().getEntry_point());
 
+			String b_flightid = bagIterator.next().getFlight_id();
+
+			for (departure d : departures) {
+				String d_flightid = d.getFlight_id();
+				String d_flightgate = d.getFlight_gate();
+
+				if (b_flightid == d_flightid) {
+
+					System.out.println("MATCH");
+
+					System.out.println("d_flightgate : " + d_flightgate + " b.getLabel : " + b.getLabel());
+					// join depature.flight gate with bag conveyer gate.
+
+					if (d_flightgate.equals(b.getLabel())) {
+					for (EdgeW ew : b.getEdges()) {
+						System.out.println(ew.getWeight());
+
+					}
+					}
+
+				}
+
+			}
 		}
 
-		System.out.println(a.getEdges().get(0).getDestination().getLabel());
-		System.out.println(a.getEdges().get(0).getWeight());
-
-		System.out.println(c.getEdges().get(0).getDestination().getLabel());
-		System.out.println(c.getEdges().get(0).getWeight());
-
 	}
+
+	// System.out.println(a.getEdges().get(0).getDestination().getLabel());
+	// System.out.println(a.getEdges().get(0).getWeight());
+
+	// System.out.println(c.getEdges().get(0).getDestination().getLabel());
+	// System.out.println(c.getEdges().get(0).getWeight());
 
 	public static boolean pathExistsBidirectional(Node a, Node b) {
 		// BFS on both nodes at the same time
