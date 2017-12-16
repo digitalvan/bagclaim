@@ -11,6 +11,9 @@ public class airport {
 		// TODO Auto-generated method stub
 
 		System.out.println("TEST");
+		Node a = new Node("a");
+		Node b = new Node("b");
+		pathExistsBidirectional(a,b);
 
 	}
 
