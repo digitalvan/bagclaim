@@ -2,7 +2,7 @@ package bagclaim;
 
 public class EdgeW {
 	private NodeW destination;
-	private double weight;
+	private int weight;
 
 	public NodeW getDestination() {
 		return destination;
@@ -12,11 +12,11 @@ public class EdgeW {
 		this.destination = destination;
 	}
 
-	public double getWeight() {
+	public int getWeight() {
 		return weight;
 	}
 
-	public void setWeight(double weight) {
+	public void setWeight(int weight) {
 		this.weight = weight;
 	}
 

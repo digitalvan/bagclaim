@@ -98,8 +98,6 @@ public class airport {
 		// System.out.println(departures.get(0).getDepature());
 		// System.out.println(departures.get(1).getDepature());
 
-	
-	
 		// bags
 		List<bag> bags = new ArrayList<bag>();
 		bags.add(new bag("0001", "Concourse_A_Ticketing", "UA12"));
@@ -109,9 +107,9 @@ public class airport {
 		bags.add(new bag("0005", "A7", "ARRIVAL"));
 
 		// conveyor system
-		// Concourse_A_Ticketing A5 5 
-		// A5 BaggageClaim 5 
-		// A5 A10 4 
+		// Concourse_A_Ticketing A5 5
+		// A5 BaggageClaim 5
+		// A5 A10 4
 		// A5 A1 6
 		// A1 A2 1
 		// A2 A3 1
@@ -122,7 +120,7 @@ public class airport {
 		// A7 A6 1
 
 		// conveyor system graph
-		
+
 		NodeW n1 = new NodeW();
 		NodeW n2 = new NodeW();
 		NodeW n3 = new NodeW();
@@ -136,8 +134,8 @@ public class airport {
 		NodeW n11 = new NodeW();
 		NodeW n12 = new NodeW();
 
-		//Nodes
-		
+		// Nodes
+
 		n1.setLabel("A1");
 		n2.setLabel("A2");
 		n3.setLabel("A3");
@@ -150,8 +148,8 @@ public class airport {
 		n10.setLabel("A10");
 		n11.setLabel("Concourse_A_Ticketing");
 		n12.setLabel("BaggageClaim");
-		
-		//Edges
+
+		// Edges
 		EdgeW e1 = new EdgeW();
 		EdgeW e2 = new EdgeW();
 		EdgeW e3 = new EdgeW();
@@ -165,61 +163,64 @@ public class airport {
 		EdgeW e11 = new EdgeW();
 		EdgeW e12 = new EdgeW();
 
-
-		//1 Edge
+		// 1 Edge
 		e1.setDestination(n2);
-		e1.setWeight(1.0);
+		e1.setWeight(1);
 		n1.addEdge(e1);
 
-		//2 Edge
+		// 2 Edge
 		e2.setDestination(n3);
-		e2.setWeight(1.0);
+		e2.setWeight(1);
 		n2.addEdge(e2);
-		
-		//3 Edge
+
+		// 3 Edge
 		e3.setDestination(n4);
-		e3.setWeight(1.0);
+		e3.setWeight(1);
 		n3.addEdge(e3);
-		
-		//4 Edge
+
+		// 4 Edge
 		e4.setDestination(n1);
-		e4.setWeight(6.0);
-		n1.addEdge(e4);
-		
-		//5 Edge
-		e5.setDestination(n10);
-		e5.setWeight(4.0);
+		e4.setWeight(6);
+		n5.addEdge(e4);
+
+		// 5 Edge
+		e5.setDestination(n9);
+		e5.setWeight(4);
 		n10.addEdge(e5);
-		
-		//6 Edge
+
+		// 6 Edge
 		e6.setDestination(n12);
-		e6.setWeight(5.0);
-		n12.addEdge(e6);
-		
-		//7 Edge
+		e6.setWeight(5);
+		n5.addEdge(e6);
+
+		// 7 Edge
 		e7.setDestination(n9);
-		e7.setWeight(1.0);
+		e7.setWeight(1);
 		n10.addEdge(e7);
-		
-		//8 Edge
+
+		// 8 Edge
 		e8.setDestination(n8);
-		e8.setWeight(1.0);
+		e8.setWeight(1);
 		n9.addEdge(e8);
-		
-		//9 Edge
+
+		// 9 Edge
 		e9.setDestination(n7);
-		e9.setWeight(1.0);
+		e9.setWeight(1);
 		n8.addEdge(e9);
-		
-		//10 Edge
+
+		// 10 Edge
 		e10.setDestination(n6);
-		e10.setWeight(1.0);
+		e10.setWeight(1);
 		n7.addEdge(e10);
-		
+
+		e11.setDestination(n5);
+		e11.setWeight(5);
+		n11.addEdge(e11);
+
 		// Create list of nodes
 
 		Graph g = new Graph();
-		
+
 		g.addNode(n1);
 		g.addNode(n2);
 		g.addNode(n3);
@@ -233,18 +234,19 @@ public class airport {
 		g.addNode(n11);
 		g.addNode(n12);
 
-		
 		// Output Bag # <point1> <point2> .. <pointn> : travel time
 
 		// From bags, you need Bag # and Entry Point.
 		// join bag.flight_id with departure.flight_id
 		// join departure.flight_gate with conveyor system gate.
-		Iterator<bag> bagIterator = bags.iterator();
-		while (bagIterator.hasNext()) {
+		int edgeweightsum = 0;
+		String outputline = null;
 
-			// System.out.println(bagIterator.next().getEntry_point());
+		for (bag b : bags) {
 
-			String b_flightid = bagIterator.next().getFlight_id();
+			String b_flightid = b.getFlight_id();
+			String b_number = b.getBag_number();
+			String b_entrypoint = b.getEntry_point();
 
 			for (departure d : departures) {
 				String d_flightid = d.getFlight_id();
@@ -252,28 +254,40 @@ public class airport {
 
 				if (b_flightid.equals(d_flightid)) {
 
-					System.out.println("MATCH");
-
-					//System.out.println("d_flightgate : " + d_flightgate + " n2.getLabel : " + n2.getLabel());
-					// join depature.flight gate with bag conveyer gate.
-
 					// iterate over coveyor system
 					for (NodeW n : g.getNodes()) {
-					if (d_flightgate.equals(n.getLabel())) {
 						for (EdgeW ew : n.getEdges()) {
-							
-							System.out.println("Flight Gate : " + d_flightgate + " Node Label : " + n.getLabel() + "  " + "Edge Weight : " + ew.getWeight());
+							if (b_entrypoint.equals(n.getLabel())) {
 
+								outputline = b_number + " " + n.getLabel() + " " + ew.getDestination().getLabel();
+								edgeweightsum = edgeweightsum + ew.getWeight();
+
+								int edgeid = g.getNodeIdByLabel(ew.getDestination().getLabel());
+								if (edgeid != -1) {
+									for (EdgeW ex : g.getNodes().get(edgeid).getEdges()) {
+
+										if (d_flightgate.equals(ex.getDestination().getLabel())) {
+
+											outputline += " " + ex.getDestination().getLabel();
+											edgeweightsum = edgeweightsum + ex.getWeight();
+
+										}
+
+									}
+								}
+
+							}
 						}
+
 					}
 
 				}
-				}
 			}
-
-
+			System.out.println(outputline + ":" + edgeweightsum);
+			edgeweightsum = 0;
+		}
 	}
-	}
+
 	// System.out.println(a.getEdges().get(0).getDestination().getLabel());
 	// System.out.println(a.getEdges().get(0).getWeight());
 

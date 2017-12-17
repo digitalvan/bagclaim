@@ -11,6 +11,28 @@ public class Graph {
 		return nodes;
 	}
 
+	public int getNodeIdByLabel(String label) {
+
+		int nodeid = 0;
+		int nodeidfound = 0;
+
+		for (NodeW n : nodes) {
+			
+
+			if (n.getLabel().equals(label)) {				
+				nodeidfound = nodeid;
+				break;
+			} else {
+
+				nodeidfound = -1;
+			}
+
+			nodeid = nodeid + 1;
+
+		}
+		return nodeidfound;
+	}
+
 	public void setNodes(List<NodeW> nodes) {
 		this.nodes = nodes;
 	}
