@@ -301,8 +301,10 @@ public class airport {
 		Node<String> node2 = new Node<String>("A2");
 		Node<String> node3 = new Node<>("A3");
 		Node<String> node4 = new Node<>("A4");
-		node3.addAdjacent(node1);
-		node3.addAdjacent(node2);
+		node1.addAdjacent(node3);
+		node3.addAdjacent(node4);
+		//node3.addAdjacent(node2);
+		//node4.addAdjacent(node3);
 		// node2.addAdjacent(node3);
 		// node1.addAdjacent(node3);
 		// node1.addAdjacent(node4);
@@ -313,10 +315,12 @@ public class airport {
 		// node3.addAdjacents(nodes);
 
 		HashMap<Node<?>, String> hm = new HashMap();
-		hm.put(node1, "3");
-		hm.put(node2, "4");
+		HashMap<Node<?>, String> hm2 = new HashMap();
 
-		node3.addAdjacentsHM(hm);
+		hm.put(node3, "3");
+		hm2.put(node4, "4");
+		node1.addAdjacentsHM(hm);
+		node4.addAdjacentsHM(hm2);
 		// System.out.println(node3.getAdjacentHM().get(node1));
 		// System.out.println(node3.getAdjacentHM().get(node2));
 
@@ -332,19 +336,30 @@ public class airport {
 		g.addNode(node1);
 		g.addNode(node2);
 		g.addNode(node3);
+		g.addNode(node4);
 
-		String source = "A3";
+		String source = "A4";
 		String dest = "A1";
 
 		// Direct Path
 		System.out.println(pathExistsBidirectional(g.getNodeIdByLabel(source), g.getNodeIdByLabel(dest)));
 
 		// If direct match found in the graph, save it
+		for (Node<?> node : g.getNodes()) {
 
-		if (g.getNodeIdByLabel(source).getAdjacentHM().containsKey(g.getNodeIdByLabel(dest))) {
+			if (node.getData().toString().equals(source) && node.getAdjacentHM().containsKey(g.getNodeIdByLabel(dest))) {
 
-			System.out.println(
-					" Path Found : " + g.getNodeIdByLabel(source).getAdjacentHM().get(g.getNodeIdByLabel(dest)));
+				System.out.println(" Source Path Found : " + node.getAdjacentHM().get(g.getNodeIdByLabel(dest)));
+
+			} else if (node.getData().toString().equals(dest) && node.getAdjacentHM().containsKey(g.getNodeIdByLabel(source))) {
+
+				System.out.println(" Destination Path Found : " + node.getAdjacentHM().get(g.getNodeIdByLabel(source)));
+
+			} else if ( node.getData().toString().equals(source)) { 
+				
+				node.getAdjacentHM().containsKey(g.getNodeIdByLabel(dest));
+				System.out.println ("Direct path Not Found :: " + node.getData() + "-->" + node.getAdjacentHM().get(g.getNodeIdByLabel(source)));
+			}
 
 		}
 
