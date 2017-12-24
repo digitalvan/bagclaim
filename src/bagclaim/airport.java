@@ -301,7 +301,8 @@ public class airport {
 		Node<String> node2 = new Node<String>("A2");
 		Node<String> node3 = new Node<>("A3");
 		Node<String> node4 = new Node<>("A4");
-		node1.addAdjacent(node3);
+		node1.addAdjacent(node2);
+		node2.addAdjacent(node3);
 		node3.addAdjacent(node4);
 		// node3.addAdjacent(node2);
 		// node4.addAdjacent(node3);
@@ -314,13 +315,17 @@ public class airport {
 		// nodes.add(node2);
 		// node3.addAdjacents(nodes);
 
-		HashMap<Node<?>, String> hm = new HashMap();
+		HashMap<Node<?>, String> hm1 = new HashMap();
 		HashMap<Node<?>, String> hm2 = new HashMap();
+		HashMap<Node<?>, String> hm3 = new HashMap();
 
-		hm.put(node3, "3");
-		hm2.put(node2, "4");
-		node1.addAdjacentsHM(hm);
-		node4.addAdjacentsHM(hm2);
+		hm1.put(node2, "3");
+		hm2.put(node3, "4");
+		hm3.put(node4, "4");
+		
+		node1.addAdjacentsHM(hm1);
+		node2.addAdjacentsHM(hm2);
+		node3.addAdjacentsHM(hm3);
 		// System.out.println(node3.getAdjacentHM().get(node1));
 		// System.out.println(node3.getAdjacentHM().get(node2));
 
@@ -338,8 +343,8 @@ public class airport {
 		g.addNode(node3);
 		g.addNode(node4);
 
-		String source = "A4";
-		String dest = "A1";
+		String source = "A1";
+		String dest = "A4";
 
 		// Direct Path
 		System.out.println(pathExistsBidirectional(g.getNodeIdByLabel(source), g.getNodeIdByLabel(dest)));
@@ -362,8 +367,13 @@ public class airport {
 				// feed edges back into graph search
 				for (Node<?> edge : node.getAdjacentHM().keySet()) {
 					System.out.println(g.getNodeIdByLabel(edge.getData().toString()).getData());
-					System.out.println("Node ::" + node.getData() + " Edge :: " + edge.getData() + " Weight :: "
+					System.out.println("Node ::" + node.getData() + " Edge :: " + edge.getData() + " L1 Weight :: "
 							+ node.getAdjacentHM().get(edge));
+					
+					for (Node<?> edge2 : g.getNodeIdByLabel(edge.getData().toString()).getAdjacentHM().keySet()) {
+					
+						System.out.println("L2 Edge : " +  edge2.getData() +" L2 Weight : " + edge2.getAdjacentHM().size());
+					}
 				}
 			}
 
