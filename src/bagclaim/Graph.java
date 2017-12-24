@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Graph {
 
-	private List<NodeW> nodes = new ArrayList<NodeW>();
+	private List<Node<?>> nodes = new ArrayList<Node<?>>();
 
-	public List<NodeW> getNodes() {
+	public List<Node<?>> getNodes() {
 		return nodes;
 	}
 
@@ -16,10 +16,9 @@ public class Graph {
 		int nodeid = 0;
 		int nodeidfound = 0;
 
-		for (NodeW n : nodes) {
-			
+		for (Node<?> n : nodes) {
 
-			if (n.getLabel().equals(label)) {				
+			if (n.getData().equals(label)) {
 				nodeidfound = nodeid;
 				break;
 			} else {
@@ -33,11 +32,11 @@ public class Graph {
 		return nodeidfound;
 	}
 
-	public void setNodes(List<NodeW> nodes) {
+	public void setNodes(List<Node<?>> nodes) {
 		this.nodes = nodes;
 	}
 
-	public void addNode(NodeW n) {
+	public void addNode(Node<?> n) {
 		this.nodes.add(n);
 
 	}

@@ -322,20 +322,29 @@ public class airport {
 		//System.out.println(node3.getAdjacentHM().get(node2));
 		
 		// get node keys
-		for ( Node key : node3.getAdjacentHM().keySet()) {
-		    System.out.println( "Node :: " + node3.getData() + " Edge ::" + key.getData() + " Weight :: " + node3.getAdjacentHM().get(key) );
+		//for ( Node key : node3.getAdjacentHM().keySet()) {
+		//    System.out.println( "Node :: " + node3.getData() + " Edge ::" + key.getData() + " Weight :: " + node3.getAdjacentHM().get(key) );
+		//}
+		
+		// Graph Search : Given a source and destination gate, return the shortest path
+		
+		Graph g = new Graph();
+		g.addNode(node1);
+		g.addNode(node2);
+		g.addNode(node3);
+		
+		for (Node<?> node : g.getNodes()) {
+			for (Node<?> edge : node.getAdjacentHM().keySet()) {
+			System.out.println("Node ::" + node.getData() + " Edge :: " + edge.getData() + " Weight :: " + node.getAdjacentHM().get(edge));
+			}
 		}
-		
-		// Search : Given a source and destination gate, return the shortest path
-		
-		
 		
 		//System.out.println(node3.getAdjacent().remove(node2));
 		//System.out.println(node3.getAdjacent().contains(node2));
 		//System.out.println(node3.getAdjacent().contains(node4));
 		
-		System.out.println(pathExistsBidirectional(node1, node3));
-		System.out.println(pathExistsBidirectional(node2, node3));
+		//System.out.println(pathExistsBidirectional(node1, node3));
+		//System.out.println(pathExistsBidirectional(node2, node3));
 
 		//System.out.println(pathExistsBidirectional(node1, node2));
 		//System.out.println(pathExistsBidirectional(node2, node3));
