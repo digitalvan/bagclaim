@@ -298,11 +298,29 @@ public class airport {
 		// Bi-directional graph test.
 		Node<String> node1 = new Node<String>("jan");
 		Node<String> node2 = new Node<String>("karol");
-		Node<String> node3 = new Node<String>("lukasz");
-		node1.addAdjacent(node2);
-		node2.addAdjacent(node3);
-
+		Node<String> node3 = new Node<>("lukasz");
+		Node<String> node4 = new Node<>("Justin");
+		//node1.addAdjacent(node2);
+		//node2.addAdjacent(node3);
+		//node1.addAdjacent(node3);
+		//node1.addAdjacent(node4);
+		
+		
+		Set<Node<?>> nodes = new HashSet<>();
+		nodes.add(node1);
+		nodes.add(node2);
+		node3.addAdjacents(nodes);
+		
+		System.out.println(node3.getAdjacent().remove(node2));
+		System.out.println(node3.getAdjacent().contains(node2));
+		System.out.println(node3.getAdjacent().contains(node4));
+		
 		System.out.println(pathExistsBidirectional(node1, node3));
+		//System.out.println(pathExistsBidirectional(node1, node2));
+		//System.out.println(pathExistsBidirectional(node2, node3));
+		//System.out.println(pathExistsBidirectional(node1, node4));
+
+
 	}
 
 	public static boolean pathExistsBidirectional(Node<?> a, Node<?> b) {
@@ -318,10 +336,14 @@ public class airport {
 		queueB.add(b);
 
 		while (!queueA.isEmpty() && !queueB.isEmpty()) {
+
+
 			if (pathExistsBidirectionalHelper(queueA, visitedA, visitedB)) {
+				System.out.println("Queue A, Visited A, Visited B");
 				return true;
 			}
 			if (pathExistsBidirectionalHelper(queueB, visitedB, visitedA)) {
+				System.out.println("Queue B, Visited B, Visited A");
 				return true;
 			}
 		}
@@ -332,7 +354,11 @@ public class airport {
 	private static boolean pathExistsBidirectionalHelper(Queue<Node<?>> queueA, Set<Node<?>> visitedA,
 			Set<Node<?>> visitedB) {
 		if (!queueA.isEmpty()) {
+			System.out.println("Queue A Size :"+queueA.size());
+
 			Node<?> next = queueA.remove();
+			System.out.println("Queue A Size :"+queueA.size());
+
 			for (Node<?> adjacent : next.getAdjacent()) {
 				if (visitedB.contains(adjacent)) {
 					return true;
