@@ -11,7 +11,7 @@ public class Graph {
 		return nodes;
 	}
 
-	public int getNodeIdByLabel(String label) {
+	public Node<?> getNodeIdByLabel(String label) {
 
 		int nodeid = 0;
 		int nodeidfound = 0;
@@ -29,7 +29,7 @@ public class Graph {
 			nodeid = nodeid + 1;
 
 		}
-		return nodeidfound;
+		return nodes.get(nodeidfound);
 	}
 
 	public void setNodes(List<Node<?>> nodes) {
