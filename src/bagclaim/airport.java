@@ -1,6 +1,7 @@
 package bagclaim;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -296,26 +297,46 @@ public class airport {
 		// }
 
 		// Bi-directional graph test.
-		Node<String> node1 = new Node<String>("jan");
-		Node<String> node2 = new Node<String>("karol");
-		Node<String> node3 = new Node<>("lukasz");
-		Node<String> node4 = new Node<>("Justin");
-		//node1.addAdjacent(node2);
+		Node<String> node1 = new Node<String>("A1");
+		Node<String> node2 = new Node<String>("A2");
+		Node<String> node3 = new Node<>("A3");
+		Node<String> node4 = new Node<>("A4");
+		node3.addAdjacent(node1);
+		node3.addAdjacent(node2);
 		//node2.addAdjacent(node3);
 		//node1.addAdjacent(node3);
 		//node1.addAdjacent(node4);
 		
 		
-		Set<Node<?>> nodes = new HashSet<>();
-		nodes.add(node1);
-		nodes.add(node2);
-		node3.addAdjacents(nodes);
+		//Set<Node<?>> nodes = new HashSet<>();
+		//nodes.add(node1);
+		//nodes.add(node2);
+		//node3.addAdjacents(nodes);
 		
-		System.out.println(node3.getAdjacent().remove(node2));
-		System.out.println(node3.getAdjacent().contains(node2));
-		System.out.println(node3.getAdjacent().contains(node4));
+		HashMap<Node<?>, String> hm = new HashMap();
+		hm.put(node1, "3");
+		hm.put(node2, "4");
+
+		node3.addAdjacentsHM(hm);
+		//System.out.println(node3.getAdjacentHM().get(node1));
+		//System.out.println(node3.getAdjacentHM().get(node2));
+		
+		// get node keys
+		for ( Node key : node3.getAdjacentHM().keySet()) {
+		    System.out.println( "Node :: " + node3.getData() + " Edge ::" + key.getData() + " Weight :: " + node3.getAdjacentHM().get(key) );
+		}
+		
+		// Search : Given a source and destination gate, return the shortest path
+		
+		
+		
+		//System.out.println(node3.getAdjacent().remove(node2));
+		//System.out.println(node3.getAdjacent().contains(node2));
+		//System.out.println(node3.getAdjacent().contains(node4));
 		
 		System.out.println(pathExistsBidirectional(node1, node3));
+		System.out.println(pathExistsBidirectional(node2, node3));
+
 		//System.out.println(pathExistsBidirectional(node1, node2));
 		//System.out.println(pathExistsBidirectional(node2, node3));
 		//System.out.println(pathExistsBidirectional(node1, node4));
@@ -339,11 +360,11 @@ public class airport {
 
 
 			if (pathExistsBidirectionalHelper(queueA, visitedA, visitedB)) {
-				System.out.println("Queue A, Visited A, Visited B");
+				//System.out.println("Queue A, Visited A, Visited B");
 				return true;
 			}
 			if (pathExistsBidirectionalHelper(queueB, visitedB, visitedA)) {
-				System.out.println("Queue B, Visited B, Visited A");
+				//System.out.println("Queue B, Visited B, Visited A");
 				return true;
 			}
 		}
@@ -354,10 +375,10 @@ public class airport {
 	private static boolean pathExistsBidirectionalHelper(Queue<Node<?>> queueA, Set<Node<?>> visitedA,
 			Set<Node<?>> visitedB) {
 		if (!queueA.isEmpty()) {
-			System.out.println("Queue A Size :"+queueA.size());
+			//System.out.println("Queue A Size :"+queueA.size());
 
 			Node<?> next = queueA.remove();
-			System.out.println("Queue A Size :"+queueA.size());
+			//System.out.println("Queue A Size :"+queueA.size());
 
 			for (Node<?> adjacent : next.getAdjacent()) {
 				if (visitedB.contains(adjacent)) {
