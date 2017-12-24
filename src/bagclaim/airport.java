@@ -303,8 +303,8 @@ public class airport {
 		Node<String> node4 = new Node<>("A4");
 		node1.addAdjacent(node3);
 		node3.addAdjacent(node4);
-		//node3.addAdjacent(node2);
-		//node4.addAdjacent(node3);
+		// node3.addAdjacent(node2);
+		// node4.addAdjacent(node3);
 		// node2.addAdjacent(node3);
 		// node1.addAdjacent(node3);
 		// node1.addAdjacent(node4);
@@ -318,7 +318,7 @@ public class airport {
 		HashMap<Node<?>, String> hm2 = new HashMap();
 
 		hm.put(node3, "3");
-		hm2.put(node4, "4");
+		hm2.put(node2, "4");
 		node1.addAdjacentsHM(hm);
 		node4.addAdjacentsHM(hm2);
 		// System.out.println(node3.getAdjacentHM().get(node1));
@@ -347,41 +347,47 @@ public class airport {
 		// If direct match found in the graph, save it
 		for (Node<?> node : g.getNodes()) {
 
-			if (node.getData().toString().equals(source) && node.getAdjacentHM().containsKey(g.getNodeIdByLabel(dest))) {
+			if (node.getData().toString().equals(source)
+					&& node.getAdjacentHM().containsKey(g.getNodeIdByLabel(dest))) {
 
 				System.out.println(" Source Path Found : " + node.getAdjacentHM().get(g.getNodeIdByLabel(dest)));
 
-			} else if (node.getData().toString().equals(dest) && node.getAdjacentHM().containsKey(g.getNodeIdByLabel(source))) {
+			} else if (node.getData().toString().equals(dest)
+					&& node.getAdjacentHM().containsKey(g.getNodeIdByLabel(source))) {
 
 				System.out.println(" Destination Path Found : " + node.getAdjacentHM().get(g.getNodeIdByLabel(source)));
 
-			} else if ( node.getData().toString().equals(source)) { 
-				
-				node.getAdjacentHM().containsKey(g.getNodeIdByLabel(dest));
-				System.out.println ("Direct path Not Found :: " + node.getData() + "-->" + node.getAdjacentHM().get(g.getNodeIdByLabel(source)));
+			} else if (node.getData().toString().equals(source)) {
+
+				// feed edges back into graph search
+				for (Node<?> edge : node.getAdjacentHM().keySet()) {
+					System.out.println(g.getNodeIdByLabel(edge.getData().toString()).getData());
+					System.out.println("Node ::" + node.getData() + " Edge :: " + edge.getData() + " Weight :: "
+							+ node.getAdjacentHM().get(edge));
+				}
 			}
 
 		}
 
-		// for (Node<?> node : g.getNodes()) {
-		// for (Node<?> edge : node.getAdjacentHM().keySet()) {
-		// System.out.println("Node ::" + node.getData() + " Edge :: " + edge.getData()
-		// + " Weight :: " + node.getAdjacentHM().get(edge));
-		// }
-		// }
-
-		// System.out.println(node3.getAdjacent().remove(node2));
-		// System.out.println(node3.getAdjacent().contains(node2));
-		// System.out.println(node3.getAdjacent().contains(node4));
-
-		// System.out.println(pathExistsBidirectional(node1, node3));
-		// System.out.println(pathExistsBidirectional(node2, node3));
-
-		// System.out.println(pathExistsBidirectional(node1, node2));
-		// System.out.println(pathExistsBidirectional(node2, node3));
-		// System.out.println(pathExistsBidirectional(node1, node4));
-
 	}
+
+	// for (Node<?> node : g.getNodes()) {
+	// for (Node<?> edge : node.getAdjacentHM().keySet()) {
+	// System.out.println("Node ::" + node.getData() + " Edge :: " + edge.getData()
+	// + " Weight :: " + node.getAdjacentHM().get(edge));
+	// }
+	// }
+
+	// System.out.println(node3.getAdjacent().remove(node2));
+	// System.out.println(node3.getAdjacent().contains(node2));
+	// System.out.println(node3.getAdjacent().contains(node4));
+
+	// System.out.println(pathExistsBidirectional(node1, node3));
+	// System.out.println(pathExistsBidirectional(node2, node3));
+
+	// System.out.println(pathExistsBidirectional(node1, node2));
+	// System.out.println(pathExistsBidirectional(node2, node3));
+	// System.out.println(pathExistsBidirectional(node1, node4));
 
 	public static boolean pathExistsBidirectional(Node<?> a, Node<?> b) {
 		// BFS on both nodes at the same time
